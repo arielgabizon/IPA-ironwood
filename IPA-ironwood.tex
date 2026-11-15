@@ -1,0 +1,553 @@
+% !tex ts-program = pdflatex
+% !tex encoding = utf-8 unicode
+
+% this is a simple template for a latex document using the "article" class.
+% see "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+\usepackage[
+    type={CC},
+    modifier={by-nc-sa},
+    version={3.0},
+]{doclicense}
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with xelatex)
+\usepackage[strict]{changepage}
+    
+    %%% examples of article customizations
+    % these packages are optional, depending whether you want the features they provide.
+    % see the latex companion or other references for full information.
+    
+    
+    %%% page dimensions
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper} % or letterpaper (us) or a5paper or....
+    % \geometry{margin=2in} % for example, change the margins to 2 inches all round
+    % \geometry{landscape} % set up the page for landscape
+    %   read geometry.pdf for detailed page layout information
+ \usepackage{numdef}
+   
+\usepackage{graphicx} % support the \includegraphics command and options
+    % some of the article customisations are relevant for this class
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts} % math fonts such as \mathbb{}
+\usepackage{amssymb} % \therefore
+% \usepackage{bickham}
+\usepackage{hyperref}
+\usepackage{cryptocode}
+\usepackage{framed} 
+    % \usepackage[parfill]{parskip} % activate to begin paragraphs with an empty line rather than an indent
+    
+    %%% packages
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. Enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+    % % these packages are all incorporated in the memoir class to one degree or another...
+\usepackage{mathrsfs}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{adjustbox}
+
+\usepackage{pgfplots}
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+  
+    %%% headers & footers
+\usepackage{fancyhdr} % this should be set after setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+    
+    
+    %%% section title appearance
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (see the fntguide.pdf for font help)
+    % (this matches context defaults)
+    
+    %%% toc (table of contents) appearance
+\usepackage[nottoc,notlof,notlot]{tocbibind} % put the bibliography in the toc
+\usepackage[titles,subfigure]{tocloft} % alter the style of the table of contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % no bold!
+
+    %%% end article customizations
+    \newcommand{\code}[1]{\texttt{#1}}
+\newcommand\tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
+\newcommand\bstrut{\rule[-0.9ex]{0pt}{0pt}}   % = `bottom' strut
+\newcommand{\bgamma}{\boldsymbol{\gamma}}
+\newcommand{\bsigma}{\boldsymbol{\sigma}}
+\newcommand{\plonk}{\ensuremath{\mathcal{P} \mathfrak{lon}\mathcal{K}}\xspace}
+
+% \newcommand{\plonk}{\ensuremath{\mathtt{PLONK}}\xspace}
+%%% the "real" document content comes below...
+\newcommand{\papertitle}{Ironwood's knowledge soundness proof of IPA in the Algebraic Group Model}
+%\newcommand{\authorname}}
+\newcommand{\company}{}
+\title{ \bf \papertitle \\[0.72cm]}
+\author{ Ariel Gabizon}
+
+
+% 	\large{\authorname} \\[0.5cm] \large{\company}
+% 	\\ {DRAFT}
+%}
+    %\date{} % activate to display a given date or no date (if empty),
+  
+           % otherwise the current date is printed 
+	
+\ProvidesPackage{numdef}
+
+%% Ariel Macros:
+% \num\newcommand{\G1}{\ensuremath{{\mathbb G}_1}\xspace}
+\newcommand{\Gi}{\ensuremath{{\mathbb G}_i}\xspace}
+\newcommand{\G}{\ensuremath{{\mathbb G}}\xspace}
+\newcommand{\Gstar}{\ensuremath{{\mathbb G}^*}\xspace}
+\newcommand{\x}{\ensuremath{\mathbf{x}}\xspace}
+\newcommand{\z}{\ensuremath{\mathbf{z}}\xspace}
+\newcommand{\X}{\ensuremath{\mathbf{X}}\xspace}
+
+% \num\newcommand{\G2}{\ensuremath{{\mathbb G}_2}\xspace}
+%\num\newcommand{\G11}{\ensuremath{\G1\setminus \set{0} }\xspace}
+%\num\newcommand{\G21}{\ensuremath{\G2\setminus \set{0} }\xspace}
+\newcommand{\grouppair}{\ensuremath{G^*}\xspace}
+\newcommand{\prvperm}{\ensuremath{\mathrm{P_{\mathsf{\sigma}}}}\xspace}
+\newcommand{\verperm}{\ensuremath{\mathrm{V_{\mathsf{\sigma}}}}\xspace}
+
+\newcommand{\Gt}{\ensuremath{{\mathbb G}_t}\xspace}
+\newcommand{\F}{\ensuremath{\mathbb F}\xspace}
+\newcommand{\Fstar}{\ensuremath{\mathbb F^*}\xspace}
+
+\newcommand{\help}[1]{$#1$-helper\xspace}
+\newcommand{\randompair}[1]{\ensuremath{\mathsf{randomPair}(#1)}\xspace}
+\newcommand{\pair}[1]{$#1$-pair\xspace}
+\newcommand{\pairs}[1]{$#1$-pairs\xspace}
+\newcommand{\chalpoint}{\ensuremath{\mathfrak{z}}\xspace}
+
+\newcommand{\pairone}[1]{\G1-$#1$-pair\xspace}
+\newcommand{\pairtwo}[1]{\G2-$#1$-pair\xspace}
+\newcommand{\sameratio}[2]{\ensuremath{\mathsf{SameRatio}(#1,#2)}\xspace}
+\newcommand{\vecc}[2]{\ensuremath{(#1)_{#2}}\xspace}
+\newcommand{\players}{\ensuremath{[n]}\xspace}
+\newcommand{\adv}{\ensuremath{\mathcal A}\xspace}
+\newcommand{\advprime}{\ensuremath{{\mathcal A}'}\xspace}
+\newcommand{\extprime}{\ensuremath{E'}\xspace}
+\newcommand{\advrand}{\ensuremath{\mathsf{rand}_{\adv}}\xspace}
+% \num\newcommand{\srs1}{\ensuremath{\mathsf{srs_1}}\xspace}
+% \num\newcommand{\srs2}{\ensuremath{\mathsf{srs_2}}\xspace}
+\newcommand{\srs}{\ensuremath{\mathsf{srs}}\xspace}
+\newcommand{\srsi}{\ensuremath{\mathsf{srs_i}}\xspace}
+\newcommand{\com}{\ensuremath{\mathsf{com}}\xspace}
+\newcommand{\comperm}{\ensuremath{\mathsf{com_{\sigma}}}\xspace}
+\newcommand{\cm}{\ensuremath{\mathsf{cm}}\xspace}
+\newcommand{\cmsig}{\ensuremath{\mathsf{cm_\sigma}}\xspace}
+\newcommand{\open}{\ensuremath{\mathsf{open}}\xspace}
+\newcommand{\openperm}{\ensuremath{\mathsf{open_{\sigma}}}\xspace}
+\newcommand{\sigof}[1]{\ensuremath{\sigma(#1)}\xspace}
+\newcommand{\proverexp}{\ensuremath{\mathsf{e}}\xspace}
+\newcommand{\reducedelems}{\ensuremath{\mathsf{r}}\xspace}
+
+\newcommand{\ci}{\ensuremath{\mathrm{CI}}\xspace}
+\renewcommand{\deg}{\ensuremath{\mathrm{deg}}\xspace}
+\newcommand{\pairvec}[1]{$#1$-vector\xspace}
+\newcommand{\Fq}{\ensuremath{\mathbb{F}_q}\xspace}
+\newcommand{\randpair}[1]{\ensuremath{\mathsf{rp}_{#1}}\xspace}
+\newcommand{\randpairone}[1]{\ensuremath{\mathsf{rp}_{#1}^{1}}\xspace}
+\newcommand{\abase}{\ensuremath{A_{\mathrm{\mathbf{0}}}}\xspace}
+\newcommand{\bbase}{\ensuremath{B_{\mathrm{\mathbf{0}}}}\xspace}
+\newcommand{\cbase}{\ensuremath{C_{\mathrm{\mathbf{0}}}}\xspace}
+
+\newcommand{\amid}{\ensuremath{A_{\mathrm{mid}}}\xspace}
+\newcommand{\bmid}{\ensuremath{B_{\mathrm{mid}}}\xspace}
+\newcommand{\cmid}{\ensuremath{C_{\mathrm{mid}}}\xspace}
+
+\newcommand{\negl}{\ensuremath{\mathsf{negl}(\lambda)}\xspace}
+\newcommand{\randpairtwo}[1]{\ensuremath{\mathsf{rp_{#1}^2}}\xspace}%the randpair in G2
+\newcommand{\nilp}{\ensuremath{\mathscr N}\xspace}
+\newcommand{\groupgen}{\ensuremath{\mathscr G}\xspace}
+\newcommand{\qap}{\ensuremath{\mathscr Q}\xspace}
+\newcommand{\polprot}[4]{$(#1,#2,#3,#4)$-polynomial protocol}
+\newcommand{\rangedprot}[5]{$#5$-ranged $(#1,#2,#3,#4)$-polynomial protocol}
+
+\newcommand{\rej}{\ensuremath{\mathsf{rej}}\xspace}
+\newcommand{\acc}{\ensuremath{\mathsf{acc}}\xspace}
+\newcommand{\res}{\ensuremath{\mathsf{res}}\xspace}
+\newcommand{\sha}[1]{\ensuremath{\mathsf{COMMIT}(#1)}\xspace}
+ \newcommand{\shaa}{\ensuremath{\mathsf{COMMIT}}\xspace}
+ \newcommand{\comm}[1]{\ensuremath{\mathsf{comm}_{#1}}\xspace}
+ \newcommand{\defeq}{:=}
+
+\newcommand{\B}{\ensuremath{\vec{B}}\xspace}
+\newcommand{\dom}{\ensuremath{H}\xspace}
+\newcommand{\C}{\ensuremath{\vec{C}}\xspace}
+\newcommand{\Btwo}{\ensuremath{\vec{B_2}}\xspace}
+\newcommand{\treevecsimp}{\ensuremath{(\tau,\rho_A,\rho_A \rho_B,\rho_A\alpha_A,\rho_A\rho_B\alpha_B, \rho_A\rho_B\alpha_C,\beta,\beta\gamma)}\xspace}% The sets of elements used in simplifed relation tree in main text body
+\newcommand{\rcptc}{random-coefficient subprotocol\xspace}
+\newcommand{\rcptcparams}[2]{\ensuremath{\mathrm{RCPC}(#1,#2)}\xspace}
+\newcommand{\verifyrcptcparams}[2]{\ensuremath{\mathrm{\mathsf{verify}RCPC}(#1,#2)}\xspace}
+\newcommand{\randadv}{\ensuremath{\mathsf{rand}_{\adv}}\xspace}
+ \num\newcommand{\ex1}[1]{\ensuremath{ #1\cdot g_1}\xspace}
+ \num\newcommand{\ex2}[1]{\ensuremath{#1\cdot g_2}\xspace}
+ \newcommand{\pr}{\mathrm{Pr}}
+ \newcommand{\powervec}[2]{\ensuremath{(1,#1,#1^{2},\ldots,#1^{#2})}\xspace}
+ \newcommand{\partition}{\ensuremath{{\mathcal T}}\xspace}
+ \newcommand{\partof}[1]{\ensuremath{{\partition_{#1}}}\xspace}
+\num\newcommand{\out1}[1]{\ensuremath{\ex1{\powervec{#1}{d}}}\xspace}
+\num\newcommand{\out2}[1]{\ensuremath{\ex2{\powervec{#1}{d}}}\xspace}
+ \newcommand{\nizk}[2]{\ensuremath{\mathrm{NIZK}(#1,#2)}\xspace}% #2 is the hash concatenation input
+ \newcommand{\verifynizk}[3]{\ensuremath{\mathrm{VERIFY\mhyphen NIZK}(#1,#2,#3)}\xspace}
+\newcommand{\protver}{protocol verifier\xspace} 
+\newcommand{\hash}{\ensuremath{\mathcal{H}}\xspace} 
+\newcommand{\mulgroup}{\ensuremath{\F^*}\xspace}
+\newcommand{\lag}[1]{\ensuremath{L_{#1}}\xspace} 
+\newcommand{\sett}[2]{\ensuremath{\set{#1}_{#2}}\xspace}
+\newcommand{\omegaprod}{\ensuremath{\alpha_{\omega}}\xspace}
+\newcommand{\lagvec}[1]{\ensuremath{\mathrm{LAG}_{#1}}\xspace}
+\newcommand{\trapdoor}{\ensuremath{r}}
+\newcommand{\trapdoorext}{\ensuremath{r_{\mathrm{ext}}}\xspace}
+\newcommand{\trapdoorsim}{\ensuremath{r_{\mathrm{sim}}}\xspace}
+\renewcommand{\mod}{\ensuremath{\;\mathrm{mod}\;}}
+\newcommand{\hsub}{\ensuremath{H^*}\xspace}
+\num\newcommand{\enc1}[1]{\ensuremath{\left[#1\right]_1}\xspace}
+\newcommand{\enci}[1]{\ensuremath{\left[#1\right]_i}\xspace}
+\num\newcommand{\enc2}[1]{\ensuremath{\left[#1\right]_2}\xspace}
+\newcommand{\gen}{\ensuremath{\mathsf{gen}}\xspace}
+\newcommand{\prv}{\ensuremath{\mathsf{\mathbf{P}}}\xspace}
+\newcommand{\prvpoly}{\ensuremath{\mathrm{P_{\mathsf{poly}}}}\xspace}
+\newcommand{\prvpc}{\ensuremath{\mathrm{P_{\mathsf{PC}}}}\xspace}
+\newcommand{\verpoly}{\ensuremath{\mathrm{V_{\mathsf{poly}}}}\xspace}
+\newcommand{\verpc}{\ensuremath{\mathrm{V_{\mathsf{PC}}}}\xspace}
+\newcommand{\ideal}{\ensuremath{\mathcal{I}}\xspace}
+\newcommand{\prf}{\ensuremath{\pi}\xspace}
+\newcommand{\simprv}{\ensuremath{\mathrm{P^{sim}}}\xspace}
+
+%\newcommand{\enc}[1]{\ensuremath{\left[#1\right]}\xspace}
+%\num\newcommand{\G0}{\ensuremath{\mathbf{G}}\xspace}
+\newcommand{\GG}{\ensuremath{\mathbf{G^*}}\xspace}  % would have liked to call this G01 but problem with name
+\num\newcommand{\g0}{\ensuremath{\mathbf{g}}\xspace}
+\newcommand{\inst}{\ensuremath{\phi}\xspace}
+\newcommand{\inp}{\ensuremath{\mathsf{x}}\xspace}
+\newcommand{\wit}{\ensuremath{\omega}\xspace}
+\newcommand{\ver}{\ensuremath{\mathsf{\mathbf{V}}}\xspace}
+\newcommand{\per}{\ensuremath{\mathsf{\mathbf{P}}}\xspace}
+\newcommand{\sonic}{\ensuremath{\mathsf{Sonic}}\xspace}
+\newcommand{\aurora}{\ensuremath{\mathsf{Aurora}}\xspace}
+\newcommand{\auroralight}{\ensuremath{\mathsf{Auroralight}}\xspace}
+\newcommand{\groth}{\ensuremath{\mathsf{Groth'16}}\xspace}
+\newcommand{\kate}{\ensuremath{\mathsf{KZG}}\xspace}
+\newcommand{\rel}{\ensuremath{\mathcal{R}}\xspace}
+\newcommand{\ext}{\ensuremath{E}\xspace}
+\newcommand{\params}{\ensuremath{\mathsf{params}_{\inst}}\xspace}
+\newcommand{\protparams}{\ensuremath{\mathsf{params}_{\inst}^\advv}\xspace}
+\num\newcommand{\p1}{\ensuremath{P_1}\xspace}
+\newcommand{\advv}{\ensuremath{ {\mathcal A}^{\mathbf{*}}}\xspace} % the adversary that uses protocol adversary as black box
+\newcommand{\crs}{\ensuremath{\sigma}\xspace}
+%\num\newcommand{\crs1}{\ensuremath{\mathrm{\sigma}_1}\xspace}
+%\num\newcommand{\crs2}{\ensuremath{\mathrm{\sigma}_2}\xspace}
+\newcommand{\set}[1]{\ensuremath{\left\{#1\right\}}\xspace}
+\newcommand{\hgen}{\ensuremath{\mathbf{g}}\xspace}
+\renewcommand{\sim}{\ensuremath{\mathsf{sim}}\xspace}%the distribution of messages when \advv simulates message of \p1
+\newcommand{\real}{\ensuremath{\mathsf{real}}\xspace}%the distribution of messages when \p1 is honest and \adv controls rest of players
+ \newcommand{\koevec}[2]{\ensuremath{(1,#1,\ldots,#1^{#2},\alpha,\alpha #1,\ldots,\alpha #1^{#2})}\xspace}
+\newcommand{\mida}{\ensuremath{A_{\mathrm{mid}}}\xspace}
+\newcommand{\midb}{\ensuremath{B_{\mathrm{mid}}}\xspace}
+\newcommand{\midc}{\ensuremath{C_{\mathrm{mid}}}\xspace}
+\newcommand{\chal}{\ensuremath{\mathsf{challenge}}\xspace}
+\newcommand{\attackparams}{\ensuremath{\mathsf{params^{pin}}}\xspace}
+\newcommand{\pk}{\ensuremath{\mathsf{pk}}\xspace}
+\newcommand{\attackdist}[2]{\ensuremath{AD_{#1}}\xspace}
+\renewcommand{\neg}{\ensuremath{\mathsf{negl}(\lambda)}\xspace}
+\newcommand{\ro}{\ensuremath{{\mathcal R}}\xspace}
+\newcommand{\elements}[1]{\ensuremath{\mathsf{elements}_{#1}}\xspace}
+ \num\newcommand{\elmpowers1}[1]{\ensuremath{\mathrm{\mathsf{e}}^1_{#1}}\xspace}
+ \num\newcommand{\elmpowers2}[1]{\ensuremath{\mathrm{\mathsf{e}}^2_{#1}}\xspace}
+\newcommand{\elempowrs}[1]{\ensuremath{\mathsf{e}_{#1}}\xspace}
+ \newcommand{\secrets}{\ensuremath{\mathsf{secrets}}\xspace}
+ \newcommand{\polysofdeg}[1]{\ensuremath{\F_{< #1}[X]}\xspace}
+ \newcommand{\bivar}[1]{\ensuremath{\F_{< #1}[X,Y]}\xspace}
+ \newcommand{\sig}{\ensuremath{\mathscr{S}}\xspace}
+ \newcommand{\prot}{\ensuremath{\mathscr{P}}\xspace}
+ \newcommand{\PCscheme}{\ensuremath{\mathscr{S}}\xspace}
+ \newcommand{\protprime}{\ensuremath{\mathscr{P^*}}\xspace}
+ \newcommand{\sigprv}{\ensuremath{\mathsf{P_{sc}}}\xspace}
+ \newcommand{\sigver}{\ensuremath{\mathsf{V_{sc}}}\xspace}
+ \newcommand{\sigpoly}{\ensuremath{\mathsf{S_{\sigma}}}\xspace}
+ \newcommand{\idpoly}{\ensuremath{\mathsf{S_{ID}}}\xspace}
+\newcommand{\idpolyevala}{\ensuremath{\mathsf{\bar{s}_{ID1}}}\xspace}
+\newcommand{\sigpolyevala}{\ensuremath{\mathsf{\bar{s}_{\sigma1}}}\xspace}
+\newcommand{\sigpolyevalb}{\ensuremath{\mathsf{\bar{s}_{\sigma2}}}\xspace}
+\newcommand{\bctv}{\ensuremath{\mathsf{BCTV}}\xspace}
+\newcommand{\PI}{\ensuremath{\mathsf{PI}}\xspace}
+\newcommand{\PIb}{\ensuremath{\mathsf{PI_B}}\xspace}
+\newcommand{\PIc}{\ensuremath{\mathsf{PI_C}}\xspace}
+\newcommand{\dl}[1]{\ensuremath{\widehat{#1}}\xspace}
+\newcommand{\obgen}{\ensuremath{\mathcal O}\xspace}
+\newcommand{\PC}{\ensuremath{\mathscr{P}}\xspace}
+\newcommand{\permscheme}{\ensuremath{\sigma_\mathscr{P}}\xspace}
+
+	
+%\newcommand{\open}{\mathsf{open}}
+\newcommand{\update}{\mathsf{update}}
+\newcommand{\Prove}{\mathcal{P}}
+\newcommand{\Verify}{\mathcal{V}}
+\newcommand{\Extract}{\mathcal{E}}
+\newcommand{\Simulate}{\mathcal{S}}
+\newcommand{\Unique}{\mathcal{U}}
+\newcommand{\Rpoly}{\R{\poly}}
+\newcommand{\Ppoly}{\Prove{\poly}}
+\newcommand{\Vpoly}{\Verify{\poly}}
+\newcommand{\Psnark}{\prv}%{\Prove{\snark}}
+\newcommand{\Vsnark}{\ver}%{\Verify{\snark}}
+\newcommand{\Rprod}{\R{\grandprod}}
+\newcommand{\Pprod}{\Prove{\grandprod}}
+\newcommand{\Vprod}{\Verify{\grandprod}}
+\newcommand{\Rperm}{\R{\perm}}
+\newcommand{\Pperm}{\Prove{\perm}}
+\newcommand{\Vperm}{\Verify{\perm}}
+\newcommand{\f}{\ensuremath{\F}\xspace}
+\newcommand{\fn}{\ensuremath{\F^n}\xspace}
+\newcommand{\gn}{\ensuremath{\G^n}\xspace}
+\newcommand{\fnn}{\ensuremath{\F^{n+1}}\xspace}
+% \newcommand{\zw}[1]{{\textcolor{magenta}{Zac:#1}}}
+% \newcommand{\ag}[1]{{\textcolor{blue}{\emph{Ariel:#1}}}}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{thm}{Theorem}
+\newtheorem{dfn}[lemma]{Definition}
+\newtheorem{remark}[lemma]{Remark}
+
+
+\newtheorem{claim}[lemma]{Claim}
+\newtheorem{corollary}[lemma]{Corollary}
+
+\newcommand{\inprod}[2]{\ensuremath{\left\langle #1,#2 \right \rangle}\xspace}
+\newcommand{\sumi}[1]{\sum_{i< #1}}
+\newcommand{\prob}{\ensuremath{\mathsf{prob}}\xspace}
+\begin{document}
+    \maketitle
+
+\begin{abstract}
+Based on the formal verification of the Zcash Ironwood protocol, we present a security proof of the inner product argument (IPA) in the algebraic group model that is arguably simpler than previous proofs.
+
+\end{abstract}
+
+\section{Introduction}
+The IPA \cite{bootle,bulletproofs} is important.
+For example, for Zcash Orchard and Ironwood.
+The correctness of the IPA is tricky. A subtle mix of ``split-and-fold'' sumcheck like protocol and the discrete log hardness. 
+Ironwood FV has nice proof leveraging the Algebraic Group Model (AGM).
+Purpose of this note is to have as simple as possible description of IPA protocol and its knowledge soundness in human readable form.
+\section{Preliminaries}
+\paragraph{Terminology}
+We assume our field \F and group \G are both of the same prime size $r$. $\G$ is written additively. Hence, we can write $aG$ for $a\in \F,G \in \G$.
+It will be convenient to denote inner product of vectors as regular multiplication. Namely,
+for $a,b\in \fn$ we denote $ab=a\cdot b \defeq \sum_{i=1}^n a_i b_i$.
+Similarly, for $a\in \fn, G\in \gn$ we denote  $aG=a\cdot b \defeq \sum_{i=1}^n a_i G_i$.
+For $u\in \f, a \in \fn$ or $a\in \gn$ we denote $ua\defeq (ua_1,\ldots, ua_n)\in \fn$
+\paragraph{The discrete log assumption}
+We state the discrete log assumption in a multi-generator form that will be convenient.
+It is standard that this follows for the regular discrete-log assumption
+\begin{dfn}\label{dfn:DLA}[DLA assumption for \G]
+For any efficient \adv the probability of winning the following game is \negl.
+\begin{enumerate}
+ \item Uniformly chosen $G_1,\ldots,G_n\in \G$ are sent to \adv.
+ \item \adv outputs a vector $f\in \F^n$.
+ \item \adv wins if and only if  $f\neq 0^n$, and   $\inprod{f}{(G_1,\ldots,G_n)}=0$.
+\end{enumerate}
+\end{dfn}
+\section{AGM stuff}
+Need to define discrepancy of expressions.
+
+\adv outputs pair $(C,a,v)$ with $\sumi{a_i G_i + vP=C}$
+Given an expression $\alpha C +\beta D$, $C,D$ being group elems for \adv or expressions in them
+we have 
+\newcommand{\vecs}{\ensuremath{\F^n}\xspace}
+\section{Inner product opening scheme }
+We give a definit
+\begin{dfn}\label{dfn:PCscheme}
+A linear commitment scheme consists of 
+\begin{itemize}
+ \item $\gen(n)$ -  a randomized algorithm that outputs a common reference string \srs.
+ \item $\com(f,\srs)$ - that given a vector $a\in \vecs$ returns a commitment \cm to $f$.
+ \item A public coin protocol  \open between parties \prv and \ver. \prv and \ver are both given $\cm\in \G,b\in \vecs,v\in \F$. \prv is given $a\in \vecs$. 
+ \end{itemize}
+such that
+\begin{itemize}
+ \item \textbf{Completeness:} Fix $\cm\in \G, b\in \fn, z\in \F$ and $a$.
+ Suppose that  $\cm = \com(a,\srs)$ and $a\cdot b=z$.  Then if \open is run correctly with inputs $(\cm,b,z;a)$
+\ver outputs \acc with probability one.
+ \item \textbf{Knowledge soundness in the algebraic group model:} There exists an efficient \ext such that for any algebraic adversary \adv the probability of \adv winning the following game is \negl over the randomness of \adv and \gen.
+ \begin{enumerate}
+  \item Given \srs, \adv outputs $\cm$.
+  \item\label{step:ksrndone} \ext, given access to the messages of \adv during the previous step, outputs $a\in \fn$.
+  \item\label{step:ksrndtwo} \adv outputs $ b\in \fn$, $z \in \F$.
+  \item \adv takes the part of \prv in the protocol \open with joint inputs $(\cm,b,z)$.
+  \item $\adv$ wins if 
+  \begin{itemize} 
+   \item \verpc outputs \acc at the end of the protocol.
+   \item $ab\neq z$ or $aG\neq \cm$.
+  \end{itemize}
+
+ \end{enumerate}
+
+\end{itemize}
+\end{dfn}
+
+
+\newcommand{\disc}[1]{\ensuremath{\mathsf{disc}(#1)}\xspace}
+\newcommand{\alo}{\ensuremath{a_{i,\mathsf{lo}}}\xspace}
+\newcommand{\anext}{\ensuremath{a_{i+1}}\xspace}
+\newcommand{\bnext}{\ensuremath{b_{i+1}}\xspace}
+\newcommand{\gnext}{\ensuremath{G_{i+1}}\xspace}
+\newcommand{\cnext}{\ensuremath{C_{i+1}}\xspace}
+\newcommand{\ahi}{\ensuremath{a_{i,\mathsf{hi}}}\xspace}
+\newcommand{\glo}{\ensuremath{G_{i,\mathsf{lo}}}\xspace}
+\newcommand{\ghi}{\ensuremath{G_{i,\mathsf{hi}}}\xspace}
+\newcommand{\blo}{\ensuremath{b_{i,\mathsf{lo}}}\xspace}
+\newcommand{\bhi}{\ensuremath{b_{i,\mathsf{hi}}}\xspace}
+\newcommand{\sumk}[1]{\ensuremath{\sum_{i=1}^k #1}\xspace}
+\newcommand{\expr}{\sum_{i=1}^m \gamma_i C_i}
+\newcommand{\todo}[1]{TODO:#1}
+\section{The IPA protocol}
+\paragraph{Notation}
+Let $k=\log n$.
+$G\in \fn$ is a set of $n$ generators. $G'\defeq (G,P)\in \fnn$.
+
+\noindent
+\underline{$\gen(n)$:}
+Choose uniform independent elements $G\in \gn$ and $P\in \G$.
+Output $\srs=(G,P)$.\\
+
+\noindent
+\underline{$\com(a\in \fn,\srs=(G,P))$:}
+Compute and output $\cm\defeq aG$. \\ \\ 
+\noindent
+\underline{$\open(\cm,v,b;a)$}
+\begin{enumerate}
+ \item \ver sends random $\alpha\in \F$. 
+\item Denote $a_0\defeq a, b_0\defeq b, C_0\defeq \cm + v \alpha P$.
+ \item For $i=0,\ldots,k-1$
+ \begin{enumerate}
+  \item \prv computes and sends the terms 
+  \[L_i\defeq \ahi(\glo+\blo P), R_i\defeq \alo(\ghi +\bhi P).\]
+  \item \ver sends a random $u_i\in \F$.
+  
+  \item \prv and \ver compute the terms for the next round:
+  \begin{itemize}
+ \item $\gnext \defeq \glo + u_i \ghi$,
+ \item $\bnext \defeq \blo + u_i\bhi$,
+ \item $\cnext \defeq (1/u_i) L_i + C_i + u_i R_i$.
+  \end{itemize}
+ \item \prv also computes $\anext \defeq \alo + (1/u_i) \ahi$.
+ \end{enumerate}
+% \item Let $a_k,b_k,G_k,C_k$ be the terms  from the last round.
+\item \prv sends $a_k$ to \ver.
+\item \ver outputs \acc if and only if
+\[C_k= a_k G_k + a_k b_k \alpha P\]
+\end{enumerate}
+
+\section{Analyzing knowledge soundness in the AGM}
+\paragraph{Discrepancy of expressions}
+Let $C$ be any group element output by \adv during the KS game.
+As \adv is algebraic $C$ is accompanied by an explanation $(a,v')$ with $a\in \fn,v \in \F$, such that $C=aG+vP$.
+
+
+We define the discrepancy 
+\[\disc{C}\defeq ab-v/\alpha.\]
+Elements of discrepancy zero are those where the coefficient $v/\alpha$ of $P'$ equals the inner product $ab$ where $a$ is the coefficient vector for $G$.
+In particular, $\disc{C_0}=0$ when \prv is honest.
+
+By linearity, we can also define $\disc{C}$ for any \emph{expression} $\sum_{i=1}^m \gamma_i C_i$ computed by \ver during \open.
+% for some integer $m$, $\gamma_i \in \F$ and elements $C_i$ output by 
+% \adv during the game.
+Namely, we define
+\[\disc{\sum_{i=1}^m \gamma_i C_i}\defeq \sum_{i=1}^m \gamma_i \disc{C_i}.\]
+
+
+
+The crucial point for us is that a expression evaluating to zero with non-zero discrepancy gives us a discrete log relation:
+Suppose  $\expr=0$. For each $i\in [m]$ we can write 
+
+
+\begin{claim}\label{clm:dlafromdisc}
+Given an explained element $C\in \G$ with $C=0$ and $\disc{C}\neq 0$
+ we get a DL solution $a \in \fn$.
+\end{claim}
+\begin{proof}
+Let $a'=(a,v)\in \fnn$ be the explanation of $C$. $\disc{C}\neq 0$ means $ab -v/\alpha \neq 0$.
+In particular, this implies $a'\neq 0$.
+Since $a'G'=0$ we have that $a'$ is a DL solution for $G'$.
+\end{proof}
+
+
+\subsection{The main argument}
+We first define the extractor \ext:
+Let $(a,v)$ be the explanation \adv sends along with \cm in the first step of the game.
+That is $\cm = aG+vP$.
+\ext simply outputs $a$.
+
+
+Let $E$ be the event that \adv wins the knowledge-soundness game.
+Namely, the event that
+-
+% that is \ver accepts while $ab\neq v$, where
+\begin{itemize}
+   \item \ver outputs \acc at the end of the protocol.
+   \item $ab\neq z$ or $aG\neq \cm$.
+\end{itemize}
+We need to show $\prob(E)=\negl$.
+The basic idea is:
+ Let $Z$ be the final term \ver checks is zero; i.e.
+ \[Z\defeq C_k - a_k G_k - a_k b_k \alpha P.\]
+We show that except for a \negl subevent of $E$, when we are in $E$, \disc{Z} is non-zero.
+Which means according to Claim \ref{clm:dlafromdisc} we can output a DLA relation. We proceed with the details.
+
+We have $C_0 =\cm+z\alpha P$.
+So $C_0$'s explanation is $(a,v+\alpha z)$
+Let $E_0\subset E$ be the subevent of $E$ where $\disc{C_0}=0$. We claim that $\prob(E_0)=\negl$:
+% We look at two cases
+% \begin{itemize}
+%  \item $ab\neq z$:
+ \[\disc{C_0} = ab  - v/\alpha - z\]
+If $v\neq 0$ the probability over $\alpha$ that this is zero is at most $1/r=\negl$.
+If $v=0$ it means $aG=\cm$ so we're in the event that $ab\neq z$ so $\disc{C_0}\neq 0$.
+
+
+% \end{itemize}
+Now assume we are in $E\setminus E_0$ so that $\disc{C_0}\neq 0$.
+For $i\in [k]$ let $E_i$ be the event that $\disc{C_i}= 0$ while $\disc{C_j}\neq 0$ for $j<i$.
+From linearity, we have
+\[\disc{C_i}= (1/u)\disc{L_i}+ \disc{C_{i-1}} + u\disc{R_i}.\]
+Thus, when \disc{C_{i-1}} is non-zero the probability that $\disc{C_i}=0$ is at most $2/r$.
+So for all $i\in [k]$, $\prob(E_i)=\negl$.
+When we are outside the event $E_1\cup\ldots\cup E_k$  (but in $E\setminus E_0$) then 
+\[\disc{C_k}\neq 0.\]
+
+Let $U\in \fn$ be the tensor vector 
+\[U\defeq (1,u_1)\otimes \ldots\otimes (1,u_k)\]
+The important observation is that both $b_k$ and $G_k$ are inner products with $U$:
+\[b_k=Ub,G_k=UG.\]
+Thus
+\[\disc{a_kG_k - a_k b_k\alpha P} = a_k\cdot \disc{UG-(Ub)\alpha P}=0.\]
+Let $Z$ be the final term \ver checks is zero; i.e.
+\[Z\defeq C_k - a_k G_k - a_k b_k \alpha P.\]
+So we have 
+
+So
+\[\disc{Z}=\disc{C_k}- \disc{a_k G_k - a_k b_k \alpha P} = \disc{C_k}\neq 0\]
+
+And so in the event $E\setminus (E_1\cup\ldots\cup  E_k)$ we can output a DL solution for $G'$ according to Claim \ref{clm:dlafromdisc}.
+Hence, according to DLA as in Definition \ref{dfn:DLA} the probability of $E\setminus (E_1\cup\ldots\cup E_k)$ is \negl.
+And so $\prob(E)=\negl$.
+% \end{proof}
+
+% An \emph{expression} is either an element output by \adv during the knowledge soundness game
+ \section*{Acknowledgements}   We thank ZCG for supporting this work
+ \bibliographystyle{alpha}
+\bibliography{references}
+    
+\end{document}
+
+

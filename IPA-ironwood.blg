@@ -1,0 +1,56 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: IPA-ironwood.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
+The style file: alpha.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Database file #1: references.bib
+I was expecting a `,' or a `}'---line 142 of file references.bib
+ :   
+ :   title = {https://www.z.cash},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "bulletproofs"
+Warning--empty journal in bootle
+You've used 1 entry,
+            2543 wiz_defined-function locations,
+            565 strings with 4830 characters,
+and the built_in function-call counts, 631 in all, are:
+= -- 61
+> -- 35
+< -- 1
++ -- 13
+- -- 13
+* -- 47
+:= -- 106
+add.period$ -- 3
+call.type$ -- 1
+change.case$ -- 9
+chr.to.int$ -- 1
+cite$ -- 2
+duplicate$ -- 23
+empty$ -- 36
+format.name$ -- 13
+if$ -- 128
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 1
+newline$ -- 9
+num.names$ -- 3
+pop$ -- 10
+preamble$ -- 1
+purify$ -- 10
+quote$ -- 0
+skip$ -- 23
+stack$ -- 0
+substring$ -- 39
+swap$ -- 9
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 8
+warning$ -- 1
+while$ -- 6
+width$ -- 2
+write$ -- 15
+(There was 1 error message)

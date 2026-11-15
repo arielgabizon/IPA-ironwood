@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: PLONK.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
+The style file: alpha.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Database file #1: references.bib
+I was expecting a `,' or a `}'---line 283 of file references.bib
+ :   
+ :   title = {https://www.z.cash},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--empty journal in Bootle
+Warning--empty year in firstUniversal
+Warning--empty journal in kate
+Warning--empty journal in sonic
+Warning--empty year in sonic
+You've used 16 entries,
+            2543 wiz_defined-function locations,
+            647 strings with 7858 characters,
+and the built_in function-call counts, 7698 in all, are:
+= -- 764
+> -- 405
+< -- 12
++ -- 147
+- -- 146
+* -- 529
+:= -- 1225
+add.period$ -- 50
+call.type$ -- 16
+change.case$ -- 117
+chr.to.int$ -- 16
+cite$ -- 21
+duplicate$ -- 312
+empty$ -- 524
+format.name$ -- 161
+if$ -- 1610
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 14
+newline$ -- 85
+num.names$ -- 48
+pop$ -- 141
+preamble$ -- 1
+purify$ -- 133
+quote$ -- 0
+skip$ -- 280
+stack$ -- 0
+substring$ -- 397
+swap$ -- 96
+text.length$ -- 12
+text.prefix$ -- 3
+top$ -- 0
+type$ -- 128
+warning$ -- 5
+while$ -- 73
+width$ -- 20
+write$ -- 206
+(There was 1 error message)

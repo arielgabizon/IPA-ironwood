@@ -1,0 +1,108 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{CHM{\etalchar{+}}19}
+
+\bibitem[BCC{\etalchar{+}}16]{Bootle}
+J.~Bootle, A.~Cerulli, P.~Chaidos, J.~Groth, and C.~Petit.
+\newblock Efficient zero-knowledge arguments for arithmetic circuits in the
+  discrete log setting.
+\newblock pages 327--357, 2016.
+
+\bibitem[BCR{\etalchar{+}}19]{aurora}
+E.~Ben{-}Sasson, A.~Chiesa, M.~Riabzev, N.~Spooner, M.~Virza, and N.~P. Ward.
+\newblock Aurora: Transparent succinct arguments for {R1CS}.
+\newblock In {\em Advances in Cryptology - {EUROCRYPT} 2019 - 38th Annual
+  International Conference on the Theory and Applications of Cryptographic
+  Techniques, Darmstadt, Germany, May 19-23, 2019, Proceedings, Part {I}},
+  pages 103--128, 2019.
+
+\bibitem[BDFG20]{hinf}
+D.~Boneh, J.~Drake, B.~Fisch, and A.~Gabizon.
+\newblock Halo infinite: Recursive zk-snarks from any additive polynomial
+  commitment scheme.
+\newblock {\em {IACR} Cryptol. ePrint Arch.}, page 1536, 2020.
+
+\bibitem[BG12]{permorig}
+S.~Bayer and J.~Groth.
+\newblock Efficient zero-knowledge argument for correctness of a shuffle.
+\newblock In {\em Advances in Cryptology - {EUROCRYPT} 2012 - 31st Annual
+  International Conference on the Theory and Applications of Cryptographic
+  Techniques, Cambridge, UK, April 15-19, 2012. Proceedings}, pages 263--280,
+  2012.
+
+\bibitem[BGM17]{SecondMPC}
+S.~Bowe, A.~Gabizon, and I.~Miers.
+\newblock Scalable multi-party computation for zk-snark parameters in the
+  random beacon model.
+\newblock Cryptology ePrint Archive, Report 2017/1050, 2017.
+\newblock \url{https://eprint.iacr.org/2017/1050}.
+
+\bibitem[CHM{\etalchar{+}}19]{marlin}
+A.~Chiesa, Y.~Hu, M.~Maller, P.~Mishra, N.~Vesely, and N.~P. Ward.
+\newblock Marlin: Preprocessing zksnarks with universal and updatable {SRS}.
+\newblock {\em {IACR} Cryptology ePrint Archive}, 2019:1047, 2019.
+
+\bibitem[COS19]{fractal}
+A.~Chiesa, D.~Ojha, and N.~Spooner.
+\newblock Fractal: Post-quantum and transparent recursive proofs from
+  holography.
+\newblock {\em {IACR} Cryptology ePrint Archive}, 2019:1076, 2019.
+
+\bibitem[CS10]{CCSD10}
+C.~Costello and D.~Stebila.
+\newblock Fixed argument pairings.
+\newblock In {\em International Conference on Cryptology and Information
+  Security in Latin America}, pages 92--108. Springer, 2010.
+
+\bibitem[FKL18]{AGM}
+G.~Fuchsbauer, E.~Kiltz, and J.~Loss.
+\newblock The algebraic group model and its applications.
+\newblock In {\em Advances in Cryptology - {CRYPTO} 2018 - 38th Annual
+  International Cryptology Conference, Santa Barbara, CA, USA, August 19-23,
+  2018, Proceedings, Part {II}}, pages 33--62, 2018.
+
+\bibitem[Gab19]{auroralight}
+A.~Gabizon.
+\newblock Auroralight:improved prover efficiency and {SRS} size in a sonic-like
+  system.
+\newblock {\em {IACR} Cryptology ePrint Archive}, 2019:601, 2019.
+
+\bibitem[GGPR13]{GGPR}
+R.~Gennaro, C.~Gentry, B.~Parno, and M.~Raykova.
+\newblock Quadratic span programs and succinct nizks without pcps.
+\newblock In {\em Advances in Cryptology - {EUROCRYPT} 2013, 32nd Annual
+  International Conference on the Theory and Applications of Cryptographic
+  Techniques, Athens, Greece, May 26-30, 2013. Proceedings}, pages 626--645,
+  2013.
+
+\bibitem[GKM{\etalchar{+}}]{firstUniversal}
+J.~Groth, M.~Kohlweiss, M.~Maller, S.~Meiklejohn, and I.~Miers.
+\newblock Updatable and universal common reference strings with applications to
+  zk-snarks.
+\newblock {\em {IACR} Cryptology ePrint Archive}, 2018.
+
+\bibitem[Gro16]{Groth16}
+J.~Groth.
+\newblock On the size of pairing-based non-interactive arguments.
+\newblock In {\em Advances in Cryptology - {EUROCRYPT} 2016 - 35th Annual
+  International Conference on the Theory and Applications of Cryptographic
+  Techniques, Vienna, Austria, May 8-12, 2016, Proceedings, Part {II}}, pages
+  305--326, 2016.
+
+\bibitem[KZG10]{kate}
+A.~Kate, G.~M. Zaverucha, and I.~Goldberg.
+\newblock Constant-size commitments to polynomials and their applications.
+\newblock pages 177--194, 2010.
+
+\bibitem[MBKM]{sonic}
+M.~Maller, S.~Bowe, M.~Kohlweiss, and S.~Meiklejohn.
+\newblock Sonic: Zero-knowledge snarks from linear-size universal and
+  updateable structured reference strings.
+\newblock \url{https://eprint.iacr.org/2019/099}.
+
+\bibitem[Set]{spartan}
+S.~Setty.
+\newblock Spartan: Efficient and general-purpose {zkSNARKs} without trusted
+  setup.
+\newblock \url{https://eprint.iacr.org/2019/550}.
+
+\end{thebibliography}
