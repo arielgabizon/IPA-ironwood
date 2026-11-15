@@ -309,6 +309,7 @@
 \newcommand{\Vperm}{\Verify{\perm}}
 \newcommand{\f}{\ensuremath{\F}\xspace}
 \newcommand{\fn}{\ensuremath{\F^n}\xspace}
+% \newcommand{\fm}{\ensuremath{\F^n}\xspace}
 \newcommand{\gn}{\ensuremath{\G^n}\xspace}
 \newcommand{\fnn}{\ensuremath{\F^{n+1}}\xspace}
 % \newcommand{\zw}[1]{{\textcolor{magenta}{Zac:#1}}}
@@ -323,6 +324,8 @@
 \newtheorem{corollary}[lemma]{Corollary}
 
 \newcommand{\inprod}[2]{\ensuremath{\left\langle #1,#2 \right \rangle}\xspace}
+\newcommand{\elem}{\ensuremath{\mathsf{g}}\xspace}
+\newcommand{\expln}{\ensuremath{\mathsf{e}}\xspace}
 \newcommand{\sumi}[1]{\sum_{i< #1}}
 \newcommand{\prob}{\ensuremath{\mathsf{prob}}\xspace}
 \begin{document}
@@ -345,7 +348,7 @@ We assume our field \F and group \G are both of the same prime size $r$. $\G$ is
 It will be convenient to denote inner product of vectors as regular multiplication. Namely,
 for $a,b\in \fn$ we denote $ab=a\cdot b \defeq \sum_{i=1}^n a_i b_i$.
 Similarly, for $a\in \fn, G\in \gn$ we denote  $aG=a\cdot b \defeq \sum_{i=1}^n a_i G_i$.
-For $u\in \f, a \in \fn$ or $a\in \gn$ we denote $ua\defeq (ua_1,\ldots, ua_n)\in \fn$
+For $u\in \f, a \in \fn$ or $a\in \gn$ we denote $ua\defeq (ua_1,\ldots, ua_n)$.
 \paragraph{The discrete log assumption}
 We state the discrete log assumption in a multi-generator form that will be convenient.
 It is standard that this follows for the regular discrete-log assumption
@@ -357,12 +360,23 @@ For any efficient \adv the probability of winning the following game is \negl.
  \item \adv wins if and only if  $f\neq 0^n$, and   $\inprod{f}{(G_1,\ldots,G_n)}=0$.
 \end{enumerate}
 \end{dfn}
-\section{AGM stuff}
-Need to define discrepancy of expressions.
+% \section{The Algebraic Group Model and algebraic adversaries}
+% \paragraph{universal CRS-based public-coin protocols}
+% We describe public-coin (meaning the verifier messages are uniformly chosen) interactive protocols between a prover and verifier; when deriving results for non-interactive protocols, we implicitly assume we can get a proof length equal to the total communication of the prover, using the Fiat-Shamir transform/a random oracle. Using this reduction between interactive and non-interactive protocols, we can refer to the ``proof length'' of an interactive protocol. 
+% 
+\section{Analysis in the Algebraic Group Model}\label{subsec:AGM}
+For security analysis we use the Algebraic Group Model (AGM) of Fuchsbauer, Kiltz and Loss\cite{AGM}.
+% The analysis here differs from more straightforward well-known analysis in the AGM, for example of the \cite{kzg} polynomial commitment scheme as done in \cite{plonk}, in that we look at expressions
+In our terminology, this means the following:
+\begin{itemize}
+ \item Before a protocol between \prv and \ver starts, there is a setup phase called \gen where a vector $G\in \G^m$ is produced.
+\item When analyzing knowledge soundness we assume our adversary \adv is \emph{algebraic}. This means that whenever \adv outputs an element $\elem \in \G$ it also outputs an \emph{explanation of \elem} which is a vector $a\in \F^m$ such that $aG=\elem$. We call such a pair $(\elem,a)$ with $\elem=aG$ an \emph{explained element}. 
+\item Importantly, we can add and scalar-multiply explained elements.
+Namely, if $\expln_1=(\elem_1,a_1),\expln_2= (\elem_2,a_2)$ are explained elements and $c_1,c_2\in F$. We can define the explained element $\expln=c_1\expln_1 + c_2\expln_2$ by
+\[\expln\defeq (c_1\elem_1+c_2\elem_2, c_1 a_1+c_2a_2).\]
 
-\adv outputs pair $(C,a,v)$ with $\sumi{a_i G_i + vP=C}$
-Given an expression $\alpha C +\beta D$, $C,D$ being group elems for \adv or expressions in them
-we have 
+\end{itemize}
+Crucially for us, an explained element $(0,a)$ for $a\neq 0$ implies a DLA relation for $G$.
 \newcommand{\vecs}{\ensuremath{\F^n}\xspace}
 \section{Inner product opening scheme }
 We give a definit
@@ -544,7 +558,7 @@ And so $\prob(E)=\negl$.
 % \end{proof}
 
 % An \emph{expression} is either an element output by \adv during the knowledge soundness game
- \section*{Acknowledgements}   We thank ZCG for supporting this work
+ \section*{Acknowledgements}   We thank The Zcash Community Grants program (ZCG) for supporting this work.
  \bibliographystyle{alpha}
 \bibliography{references}
     
