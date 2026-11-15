@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.11) (preloaded format=pdflatex 2020.11.3)  12 NOV 2026 16:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.11) (preloaded format=pdflatex 2020.11.3)  15 NOV 2026 17:10
 entering extended mode
 **./IPA-ironwood.tex
 (IPA-ironwood.tex
@@ -1123,27 +1123,27 @@ Package: ccicons 2017/10/30 v1.6 LaTeX support for Creative Commons icons
 )
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\\' on input line 328.
+(hyperref)                removing `\\' on input line 331.
 
 (IPA-ironwood.aux)
 \openout1 = `IPA-ironwood.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 328.
-LaTeX Font Info:    ... okay on input line 328.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 328.
-LaTeX Font Info:    ... okay on input line 328.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 328.
-LaTeX Font Info:    ... okay on input line 328.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 328.
-LaTeX Font Info:    ... okay on input line 328.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 328.
-LaTeX Font Info:    ... okay on input line 328.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 328.
-LaTeX Font Info:    ... okay on input line 328.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 328.
-LaTeX Font Info:    ... okay on input line 328.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 328.
-LaTeX Font Info:    ... okay on input line 328.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 331.
+LaTeX Font Info:    ... okay on input line 331.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 331.
+LaTeX Font Info:    ... okay on input line 331.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 331.
+LaTeX Font Info:    ... okay on input line 331.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 331.
+LaTeX Font Info:    ... okay on input line 331.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 331.
+LaTeX Font Info:    ... okay on input line 331.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 331.
+LaTeX Font Info:    ... okay on input line 331.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 331.
+LaTeX Font Info:    ... okay on input line 331.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 331.
+LaTeX Font Info:    ... okay on input line 331.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1197,7 +1197,7 @@ Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
 )
-Package hyperref Info: Link coloring OFF on input line 328.
+Package hyperref Info: Link coloring OFF on input line 331.
 
 ("C:\Program Files\MiKTeX\tex/latex/hyperref\nameref.sty"
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -1211,9 +1211,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count386
 )
-LaTeX Info: Redefining \ref on input line 328.
-LaTeX Info: Redefining \pageref on input line 328.
-LaTeX Info: Redefining \nameref on input line 328.
+LaTeX Info: Redefining \ref on input line 331.
+LaTeX Info: Redefining \pageref on input line 331.
+LaTeX Info: Redefining \nameref on input line 331.
  (IPA-ironwood.out) (IPA-ironwood.out)
 \@outlinefile=\write4
 \openout4 = `IPA-ironwood.out'.
@@ -1226,82 +1226,81 @@ Package caption Info: End \AtBeginDocument code.
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.17} into 
 your preamble.
- on input line 328.
+ on input line 331.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 330
+LaTeX Font Info:    Trying to load font information for U+msa on input line 333
 .
 ("C:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 330
+LaTeX Font Info:    Trying to load font information for U+msb on input line 333
 .
 
 ("C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for U+rsfs on input line 33
-0.
+3.
 
 (C:\Users\ariel\AppData\Roaming\MiKTeX\tex/latex/jknappen\ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 
-LaTeX Warning: Citation `bulletproofs' on page 1 undefined on input line 337.
+LaTeX Warning: Citation `bulletproofs' on page 1 undefined on input line 340.
 
 [1.1
 
-{C:/Users/ariel/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 418--422
+{C:/Users/ariel/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2.2]
+Underfull \hbox (badness 10000) in paragraph at lines 432--436
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 423--429
+Underfull \hbox (badness 10000) in paragraph at lines 437--443
 
  []
 
-[2.2] [3.3] [4.4] (IPA-ironwood.bbl)
+[3.3] [4.4] (IPA-ironwood.bbl [5.5])
 (C:\Users\ariel\AppData\Roaming\MiKTeX\tex/generic/stringenc\se-pdfdoc.def
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 )
 (C:\Users\ariel\AppData\Roaming\MiKTeX\tex/generic/stringenc\se-utf8.def
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 )
-[5.5] (IPA-ironwood.aux)
+[6.6] (IPA-ironwood.aux)
 Package rerunfilecheck Info: File `IPA-ironwood.out' has not changed.
-(rerunfilecheck)             Checksum: 4F1777C05C40A8610ACDFEB833EB3488;441.
+(rerunfilecheck)             Checksum: 712B570DF69628E1C232A5ABE1379868;469.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 35567 strings out of 479799
- 808411 string characters out of 2879559
- 1242102 words of memory out of 3000000
- 51828 multiletter control sequences out of 15000+200000
+ 35572 strings out of 479799
+ 808447 string characters out of 2879559
+ 1243102 words of memory out of 3000000
+ 51831 multiletter control sequences out of 15000+200000
  548142 words of font info for 77 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,12n,130p,851b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 99i,11n,130p,851b,683s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\ariel\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1095.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/
 Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program File
 s/MiKTeX/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Program Files/MiKTeX/f
 onts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/p
 ublic/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmmi6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.p
-fb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Progra
-m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTe
-X/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/
-public/amsfonts/cm/cmss10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmss12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8
-.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Pro
-gram Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/Mi
-KTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX/fonts/t
-ype1/public/amsfonts/symbols/msbm10.pfb>
-Output written on IPA-ironwood.pdf (5 pages, 232211 bytes).
+ts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.p
+fb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Progra
+m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX
+/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Program Files/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmss12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsf
+onts/cm/cmss8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy1
+0.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Pro
+gram Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/M
+iKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on IPA-ironwood.pdf (6 pages, 227961 bytes).
 PDF statistics:
- 176 PDF objects out of 1000 (max. 8388607)
- 40 named destinations out of 1000 (max. 500000)
+ 178 PDF objects out of 1000 (max. 8388607)
+ 42 named destinations out of 1000 (max. 500000)
  81 words of extra memory for PDF output out of 10000 (max. 10000000)
 

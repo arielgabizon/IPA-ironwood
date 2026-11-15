@@ -12,45 +12,45 @@ I was expecting a `,' or a `}'---line 142 of file references.bib
 I'm skipping whatever remains of this entry
 Warning--I didn't find a database entry for "bulletproofs"
 Warning--empty journal in bootle
-You've used 1 entry,
+You've used 2 entries,
             2543 wiz_defined-function locations,
-            565 strings with 4830 characters,
-and the built_in function-call counts, 631 in all, are:
-= -- 61
-> -- 35
-< -- 1
-+ -- 13
-- -- 13
-* -- 47
-:= -- 106
-add.period$ -- 3
-call.type$ -- 1
-change.case$ -- 9
-chr.to.int$ -- 1
-cite$ -- 2
-duplicate$ -- 23
-empty$ -- 36
-format.name$ -- 13
-if$ -- 128
+            572 strings with 5086 characters,
+and the built_in function-call counts, 1169 in all, are:
+= -- 115
+> -- 60
+< -- 2
++ -- 23
+- -- 22
+* -- 82
+:= -- 187
+add.period$ -- 6
+call.type$ -- 2
+change.case$ -- 16
+chr.to.int$ -- 2
+cite$ -- 3
+duplicate$ -- 47
+empty$ -- 77
+format.name$ -- 23
+if$ -- 245
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 1
-newline$ -- 9
-num.names$ -- 3
-pop$ -- 10
+missing$ -- 2
+newline$ -- 14
+num.names$ -- 6
+pop$ -- 19
 preamble$ -- 1
-purify$ -- 10
+purify$ -- 18
 quote$ -- 0
-skip$ -- 23
+skip$ -- 44
 stack$ -- 0
-substring$ -- 39
-swap$ -- 9
-text.length$ -- 1
+substring$ -- 71
+swap$ -- 18
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 8
+type$ -- 16
 warning$ -- 1
-while$ -- 6
-width$ -- 2
-write$ -- 15
+while$ -- 12
+width$ -- 4
+write$ -- 28
 (There was 1 error message)

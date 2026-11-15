@@ -7,4 +7,11 @@ J.~Bootle, A.~Cerulli, P.~Chaidos, J.~Groth, and C.~Petit.
   discrete log setting.
 \newblock pages 327--357, 2016.
 
+\bibitem[FKL18]{AGM}
+G.~Fuchsbauer, E.~Kiltz, and J.~Loss.
+\newblock The algebraic group model and its applications.
+\newblock In {\em Advances in Cryptology - {CRYPTO} 2018 - 38th Annual
+  International Cryptology Conference, Santa Barbara, CA, USA, August 19-23,
+  2018, Proceedings, Part {II}}, pages 33--62, 2018.
+
 \end{thebibliography}
