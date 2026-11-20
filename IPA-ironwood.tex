@@ -375,8 +375,8 @@ In our terminology, this means the following:
 Namely, if $\expln_1=(\elem_1,a_1),\expln_2= (\elem_2,a_2)$ are explained elements and $c_1,c_2\in F$. We can define the explained element $\expln=c_1\expln_1 + c_2\expln_2$ by
 \[\expln\defeq (c_1\elem_1+c_2\elem_2, c_1 a_1+c_2a_2).\]
 
+\item Crucially for us, an explained element $(0,a)$ for $a\neq 0$ implies a DLA relation for $G$.
 \end{itemize}
-Crucially for us, an explained element $(0,a)$ for $a\neq 0$ implies a DLA relation for $G$.
 \newcommand{\vecs}{\ensuremath{\F^n}\xspace}
 \section{Inner product opening scheme }
 We give a definit
@@ -461,32 +461,45 @@ Compute and output $\cm\defeq aG$. \\ \\
 \item \ver outputs \acc if and only if
 \[C_k= a_k G_k + a_k b_k \alpha P\]
 \end{enumerate}
+\begin{remark}
+ A more natural scheme would not include $P$ in \srs; and instead have \ver generate random $P\in \G$ during \open.
+ This would also make the knowledge soundness analysis in the next section simpler, as it removes the edge case where \adv uses $P$ in
+ the explanation \cm (whereas the honest \prv uses only $G$).
+ However, in practice it is more efficient to have $P$ generated in advance, as hashing into a curve can be expensive, especially when \ver is expressed in-circuit as part of recursion.
+\end{remark}
 
 \section{Analyzing knowledge soundness in the AGM}
+\paragraph{Notational convention}
+During the KS game \adv outputs explained elements $\expln=(C,(a,v))$ such that $C=aG+vP$.
+\ver computes expressions in the group elements $C$ output by \adv, and given the transcript one can efficiently compute the corresponding explained  elements by operating on the vectors $(a,v)$.
+We make the convention in the following section that the group elements $C$ are implicitly associated with these explanations that are expressions in the explanations output by \adv. Thus we will talk about an explained element $C\in G$
 \paragraph{Discrepancy of expressions}
-Let $C$ be any group element output by \adv during the KS game.
-As \adv is algebraic $C$ is accompanied by an explanation $(a,v')$ with $a\in \fn,v \in \F$, such that $C=aG+vP$.
+Let $C)$ be an explained element output by \adv during the KS game, or
+alternatively an explained element where $C$ is computed by \ver from elements output by \adv.
+We abuse notation and refer to $C$ as the explained element, assuming it includes the vector $(a,v)$ which is the expression in the explaining vectors
+output by \adv.
+% As \adv is algebraic $C$ is accompanied by an explanation $(a,v')$ with $a\in \fn,v \in \F$, such that $C=aG+vP$.
 
 
 We define the discrepancy 
 \[\disc{C}\defeq ab-v/\alpha.\]
-Elements of discrepancy zero are those where the coefficient $v/\alpha$ of $P'$ equals the inner product $ab$ where $a$ is the coefficient vector for $G$.
+Elements of discrepancy zero are those where the coefficient $v$ of $ P$ equals the inner product times $\alpha$, i.e. $\alpha ab$.
 In particular, $\disc{C_0}=0$ when \prv is honest.
 
-By linearity, we can also define $\disc{C}$ for any \emph{expression} $\sum_{i=1}^m \gamma_i C_i$ computed by \ver during \open.
+% By linearity, we can also define $\disc{C}$ for any \emph{expression} $\sum_{i=1}^m \gamma_i C_i$ computed by \ver during \open.
 % for some integer $m$, $\gamma_i \in \F$ and elements $C_i$ output by 
 % \adv during the game.
-Namely, we define
-\[\disc{\sum_{i=1}^m \gamma_i C_i}\defeq \sum_{i=1}^m \gamma_i \disc{C_i}.\]
+% Namely, we define
+% \[\disc{\sum_{i=1}^m \gamma_i C_i}\defeq \sum_{i=1}^m \gamma_i \disc{C_i}.\]
 
 
 
-The crucial point for us is that a expression evaluating to zero with non-zero discrepancy gives us a discrete log relation:
+The crucial point for us is that an expression evaluating to zero with non-zero discrepancy gives us a discrete log relation:
 Suppose  $\expr=0$. For each $i\in [m]$ we can write 
 
 
 \begin{claim}\label{clm:dlafromdisc}
-Given an explained element $C\in \G$ with $C=0$ and $\disc{C}\neq 0$
+Given an explained element $(C,a')$ with $C=0$ and $\disc{C}\neq 0$
  we get a DL solution $a \in \fn$.
 \end{claim}
 \begin{proof}
