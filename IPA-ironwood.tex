@@ -516,54 +516,47 @@ Compute and output $\cm\defeq aG$. \\ \\
 % \end{proof}
 The main claim is that 
 \begin{thm}\label{thm:main}
-Assuming DLA holds for \G the above is a linear commitment scheme with knowledge soundness in the algebraic group model.
+Assume DLA holds for \G. Then the above is a linear commitment scheme with knowledge soundness in the algebraic group model.
  
 \end{thm}
-
+\noindent
 The main thing to prove is knowledge-soundness which we do in the next section.
+
+
 \section{Analyzing knowledge soundness in the AGM}
-\paragraph{Notational convention}
+% \paragraph{Notational convention}
 During the KS game \adv outputs explained elements $\expln=(C,(a\in \fn,v\in \F))$ such that $C=aG+vP$.
-\ver computes expressions in the group elements  output by \adv; for example, the elements $C_i$.
-As explained in Section \ref{sec:agm}, we can think of these elements as explained elements, by computing the same expression in
+\ver during \open computes expressions in these group elements; for example, the elements $C_i$.
+As explained in Section \ref{sec:agm}, we can extend the elements to explained elements by computing the same expression of the explanations $\set{(a,v)}$
 the explanations.
-% 
-% 
-% and given the transcript one can efficiently compute the corresponding explained  elements by operating on the vectors $(a,v)$.
-% We make the convention in the following section that the group elements $C$ are implicitly associated with these explanations that are expressions in the explanations output by \adv. Thus we will talk about an explained element $C\in G$
+We refer to this set of explained elements - those output by \adv and those compute by \ver as the \emph{elements arising in the game}.
 \paragraph{Discrepancy of expressions}
-Let $C$ be an explained element output by \adv during the KS game, or
-alternatively an explained element where $C$ is computed by \ver from elements output by \adv.
-We abuse notation and refer to $C$ as the explained element, assuming it includes the vector $(a,v)$ which is the expression in the explaining vectors
-output by \adv.
-% As \adv is algebraic $C$ is accompanied by an explanation $(a,v')$ with $a\in \fn,v \in \F$, such that $C=aG+vP$.
-
-
+% Let $\expln$ be an explained element arising in the KS game. Namely, an element $\expln=(C,(a,v))$ with $C=aG+vP$ output by \adv,
+% or an expression in such output elements computed by \ver during \open.
+% 
+% alternatively an explained element where $C$ is computed by \ver from elements output by \adv.
+% We abuse notation and refer to $C$ as the explained element, assuming it includes the vector $(a,v)$ which is the expression in the explaining vectors
+% output by \adv.
+Let $\expln=(C,(a,v))$ be an explained element arising in the game.
 We define the discrepancy 
-\[\disc{C}\defeq ab-v/\alpha.\]
+\[\disc{\expln}\defeq ab-v/\alpha.\]
 Elements of discrepancy zero are those where the coefficient $v$ of $ P$ equals the inner product times $1/\alpha$, i.e. $ab/\alpha$.
-In particular, $\disc{C_0}=0$ when \prv is honest.
-
-% By linearity, we can also define $\disc{C}$ for any \emph{expression} $\sum_{i=1}^m \gamma_i C_i$ computed by \ver during \open.
-% for some integer $m$, $\gamma_i \in \F$ and elements $C_i$ output by 
-% \adv during the game.
-% Namely, we define
-% \[\disc{\sum_{i=1}^m \gamma_i C_i}\defeq \sum_{i=1}^m \gamma_i \disc{C_i}.\]
+In particular, $\disc{(C_0,(a,v))}=0$ when the corresponding inner product claim is true: $aG=C$ and $ab=v/\alpha$.
 
 
-
-The crucial point for us is that an expression evaluating to zero with non-zero discrepancy gives us a discrete log relation:
-Suppose  $\expr=0$. For each $i\in [m]$ we can write 
-
-
+The crucial point for us is that an expression evaluating to zero with non-zero discrepancy gives us a discrete log relation with \srs
+and thus can only be produced with negligible probability under the DLA.
 \begin{claim}\label{clm:dlafromdisc}
-Given an explained element $(C,a')$ with $C=0$ and $\disc{C}\neq 0$
- we get a DL solution $a \in \fn$.
+ Assume DLA holds for \G.
+The probability that one of the elements \expln arising in the game is of form $(0,(a,v))$ with $\disc{\expln}\neq 0$ is \negl.
 \end{claim}
 \begin{proof}
-Let $a'=(a,v)\in \fnn$ be the explanation of $C$. $\disc{C}\neq 0$ means $ab -v/\alpha \neq 0$.
-In particular, this implies $a'\neq 0$.
-Since $a'G'=0$ we have that $a'$ is a DL solution for $G'$.
+We construct an adversary \advprime for the DLA game with $G'\in \F^{n+1}$ given the adversary \adv for the KS game. \advprime runs the KS game with \adv using $srs=(G,P)=G'$.
+When an element $(0,(a,v))$ with $\disc{\expln}\neq 0$ arises in the KS game \advprime outputs $(a,v)$.
+Note that $\disc{\expln}\neq 0$ implies in particular that $(a,v)\neq 0^{n+1}$.
+Since $(a,v)\srs =0$, $(a,v)$ is thus a valid solution the DLA game and so \advprime's success probability is the same as the probability that
+such an element \expln arises in the game.
+
 \end{proof}
 
 
@@ -577,29 +570,34 @@ That is $\cm = aG+vP$.
 Let $E$ be the event that \adv wins the knowledge-soundness game.
 Namely, the event that
 % that is \ver accepts while $ab\neq v$, where
-\begin{itemize}
+\begin{enumerate}
    \item \ver outputs \acc.
    \item $ab\neq z$ or $aG\neq \cm$.
-\end{itemize}
+\end{enumerate}
 We need to show $\prob(E)=\negl$.
  Let $Z$ be the final term \ver checks is zero; i.e.
  \[Z\defeq C_k - a_k G_k - a_k b_k \alpha P.\]
-We show that except for a \negl subevent of $E$, $\disc{Z}\neq 0$ when we are in $E$.
-This implies according to Claim \ref{clm:dlafromdisc} that we can output a non-zero vector $(a',v')$ such that $a'G+v'P=0$. Hence, under DLA we must have $\pr(E)=\negl$.  We proceed with the details.
+ Let $\expln=(Z,(a',v'))$ be the correspodning explained element.
+ 
+We show that except for a \negl subevent of $E$, $\disc{\expln}\neq 0$ when we are in $E$.
+% This means that $a'G+v'\alpha
+This implies according to Claim \ref{clm:dlafromdisc} that $\pr(E)=\negl$.  We proceed with the details.
 
 We have $C_0 =\cm+z\alpha P$.
-So $C_0$'s explanation is $(a,v+\alpha z)$.
-Let $E_0\subset E$ be the subevent of $E$ where $\disc{C_0}=0$. We claim that $\prob(E_0)=\negl$:
+So the correspending explained element is  $\expln_0\defeq (C_0,(a,v+\alpha z))$.
+Let $E_0\subset E$ be the subevent of $E$ where $\disc{\expln_0}=0$. We claim that $\prob(E_0)=\negl$:
 % We look at two cases
 % \begin{itemize}
 %  \item $ab\neq z$:
- \[\disc{C_0} = ab  - v/\alpha - z.\]
+ \[\disc{\expln_0} = ab  - v/\alpha - z.\]
 If $v\neq 0$ the probability over $\alpha$ that this is zero is at most $1/r=\negl$.
-If $v=0$ it means $aG=\cm$ so we're in the event that $ab\neq z$, and so $\disc{C_0}\neq 0$.
+If $v=0$ it means $aG=\cm$ so we're in the event that $ab\neq z$, and so $\disc{\expln_0}\neq 0$.
 (Recall that in $E$ either $aG=\cm$ or $ab\neq z$.)
 
 
 % \end{itemize}
+To avoid cumbersome notation, let's make from now on the convention that an element output by \adv or computed by \ver is naturally associated 
+with an explained element, and so its discrepancy is directly defined.
 Now assume we are in $E\setminus E_0$ so that $\disc{C_0}\neq 0$.
 For $i\in [k]$, let $E_i$ be the subevent that $\disc{C_i}= 0$ while $\disc{C_j}\neq 0$ for $j<i$.
 From linearity, we have
