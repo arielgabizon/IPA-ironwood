@@ -172,8 +172,8 @@
 \newcommand{\polprot}[4]{$(#1,#2,#3,#4)$-polynomial protocol}
 \newcommand{\rangedprot}[5]{$#5$-ranged $(#1,#2,#3,#4)$-polynomial protocol}
 
-\newcommand{\rej}{\ensuremath{\mathsf{rej}}\xspace}
-\newcommand{\acc}{\ensuremath{\mathsf{acc}}\xspace}
+\newcommand{\rej}{\ensuremath{\mathsf{reject}}\xspace}
+\newcommand{\acc}{\ensuremath{\mathsf{accept}}\xspace}
 \newcommand{\res}{\ensuremath{\mathsf{res}}\xspace}
 \newcommand{\sha}[1]{\ensuremath{\mathsf{COMMIT}(#1)}\xspace}
  \newcommand{\shaa}{\ensuremath{\mathsf{COMMIT}}\xspace}
@@ -207,7 +207,6 @@
 \newcommand{\omegaprod}{\ensuremath{\alpha_{\omega}}\xspace}
 \newcommand{\lagvec}[1]{\ensuremath{\mathrm{LAG}_{#1}}\xspace}
 \newcommand{\trapdoor}{\ensuremath{r}}
-\newcommand{\trapdoorext}{\ensuremath{r_{\mathrm{ext}}}\xspace}
 \newcommand{\trapdoorsim}{\ensuremath{r_{\mathrm{sim}}}\xspace}
 \renewcommand{\mod}{\ensuremath{\;\mathrm{mod}\;}}
 \newcommand{\hsub}{\ensuremath{H^*}\xspace}
@@ -239,7 +238,7 @@
 \newcommand{\groth}{\ensuremath{\mathsf{Groth'16}}\xspace}
 \newcommand{\kate}{\ensuremath{\mathsf{KZG}}\xspace}
 \newcommand{\rel}{\ensuremath{\mathcal{R}}\xspace}
-\newcommand{\ext}{\ensuremath{E}\xspace}
+\newcommand{\ext}{\ensuremath{\mathcal{E}}\xspace}
 \newcommand{\params}{\ensuremath{\mathsf{params}_{\inst}}\xspace}
 \newcommand{\protparams}{\ensuremath{\mathsf{params}_{\inst}^\advv}\xspace}
 \num\newcommand{\p1}{\ensuremath{P_1}\xspace}
@@ -328,6 +327,8 @@
 \newcommand{\expln}{\ensuremath{\mathsf{e}}\xspace}
 \newcommand{\sumi}[1]{\sum_{i< #1}}
 \newcommand{\prob}{\ensuremath{\mathsf{prob}}\xspace}
+\newcommand{\poly}{\ensuremath{\mathsf{poly(\lambda)}}\xspace}
+% \newcommand{\obgen}{\ensuremath{\mathcal O}\xspace}
 \begin{document}
     \maketitle
 
@@ -337,17 +338,43 @@ Based on the formal verification of the Zcash Ironwood protocol, we present a se
 \end{abstract}
 
 \section{Introduction}
-The IPA \cite{bootle,bulletproofs} is important.
-For example, for Zcash Orchard and Ironwood.
-The correctness of the IPA is tricky. A subtle mix of ``split-and-fold'' sumcheck like protocol and the discrete log hardness. 
-Ironwood FV has nice proof leveraging the Algebraic Group Model (AGM).
-Purpose of this note is to have as simple as possible description of IPA protocol and its knowledge soundness in human readable form.
-\section{Preliminaries}
-\paragraph{Terminology}
-We assume our field \F and group \G are both of the same prime size $r$. $\G$ is written additively. Hence, we can write $aG$ for $a\in \F,G \in \G$.
+The  \emph{inner product argument} (IPA) \cite{bootle,bulletproofs} is an important crypographic protocol.\footnote{We follow the current informal convention that the term IPA refers to inner product arguments based on discrete log hardness, although there are obviously other protocols for proving correctness of inner products.}
+It is at the technical heart of the  Zcash Orchard and Ironwood protocols \cite{zcashspec}.
+The IPA is similar to other ``split-and-fold'' protocols; most notably the sumcheck protocol \cite{lfkn}.
+In such protocols we have a sequence of rounds in which we split the current claim into several smaller claims, and then use verifier randomness to combine them into one smaller claim such that - if the original claim was incorrect, then with high probability so is the new smaller claim.
+Both in sumcheck and IPA final verification requires an inner-product of the private prover witness $a$ with a vector $U$ derived from the verifier challenges. In sumcheck, \prv typically proves correctness of $a\cdot U$  using a polynomial commitment scheme.
+The striking property of IPA is that \prv provides this value as untrusted advice \emph{without
+proving it correct}! Discrete-log hardness (which we don't have/want to assume in  a generic sumcheck setting) is then used to show \prv can't cheat, despite lack of said proof.
+
+This combination of a sumcheck like split-and-fold together with DL hardness makes knowledge soundness proofs of IPA arguably cumbersome 
+and subtle cf. \cite{bootle,bulletproofs,sumcheckipa,revisit}.
+
+To help gain confidence in the security of systems relying on IPA it is helpful to look for simpler security proofs, also at the expense of stronger cryptographic assumptions, like the Algebraic Group Model (AGM) \cite{agm}.
+Indeed, such a simpler more elegant AGM-based proof was discovered as part of the Zcash Ironwood formal verification.
+However, this proof was only present as lean code. The purpose of this note is a more easily human-readable version of it.
+
+\subsection{Orgainization of paper}
+The main protocol and security proof are presented in the last two sections. A reader familiar with the material might want to initially skip Sections \ref{sec:prelim}-\ref{sec:LCS} to get a sense of the main argument.
+
+\section{Preliminaries}\label{sec:prelim}
+\paragraph{Fields and Groups}
+We assume our field \F is of prime order $p$ and that \G is a cyclic group of the same order.
+% We denote by \polysofdeg{d} the set of univariate polynomials over \F of degree smaller than d. 
+We assume all algorithms described receive as an implicit parameter the security parameter $\lambda$.
+
+Whenever we use the term \emph{efficient}, we mean an algorithm running in time \poly. Furthermore,
+we assume an \emph{object generator} \obgen that is run with input $\lambda$ before all protocols, and returns some parameters and all fields and groups used. Specifically, in our protocols $\obgen(\lambda) = (k,n,\F, \G)$ where
+\begin{itemize}
+\item $k,n$ are positive integers with $n=2^k=\poly$.
+\item \F is a prime field of super-polynomial size $p = \lambda^{\omega(1)}$
+.
+\item $\G$ is a group of size $p$.
+\end{itemize}
+\paragraph{Terminology and Notation}
+% We assume our field \F and group \G are both of the same prime size $r$. We assume $r $\G$ is written additively. Hence, we can write $aG$ for $a\in \F,G \in \G$.
 It will be convenient to denote inner product of vectors as regular multiplication. Namely,
 for $a,b\in \fn$ we denote $ab=a\cdot b \defeq \sum_{i=1}^n a_i b_i$.
-Similarly, for $a\in \fn, G\in \gn$ we denote  $aG=a\cdot b \defeq \sum_{i=1}^n a_i G_i$.
+Similarly, for $a\in \fn, G\in \gn$ we denote  $aG=a\cdot G \defeq \sum_{i=1}^n a_i G_i$.
 For $u\in \f, a \in \fn$ or $a\in \gn$ we denote $ua\defeq (ua_1,\ldots, ua_n)$.
 \paragraph{The discrete log assumption}
 We state the discrete log assumption in a multi-generator form that will be convenient.
@@ -355,41 +382,43 @@ It is standard that this follows for the regular discrete-log assumption
 \begin{dfn}\label{dfn:DLA}[DLA assumption for \G]
 For any efficient \adv the probability of winning the following game is \negl.
 \begin{enumerate}
- \item Uniformly chosen $G_1,\ldots,G_n\in \G$ are sent to \adv.
+ \item A uniformly chosen vector $G\in \G^n$ is sent to \adv.
  \item \adv outputs a vector $f\in \F^n$.
- \item \adv wins if and only if  $f\neq 0^n$, and   $\inprod{f}{(G_1,\ldots,G_n)}=0$.
+ \item \adv wins if and only if  $f\neq 0^n$, and   $fG = \sumi{n}f_i G_i =0$.
 \end{enumerate}
 \end{dfn}
-% \section{The Algebraic Group Model and algebraic adversaries}
-% \paragraph{universal CRS-based public-coin protocols}
-% We describe public-coin (meaning the verifier messages are uniformly chosen) interactive protocols between a prover and verifier; when deriving results for non-interactive protocols, we implicitly assume we can get a proof length equal to the total communication of the prover, using the Fiat-Shamir transform/a random oracle. Using this reduction between interactive and non-interactive protocols, we can refer to the ``proof length'' of an interactive protocol. 
-% 
-\section{Analysis in the Algebraic Group Model}\label{subsec:AGM}
-For security analysis we use the Algebraic Group Model (AGM) of Fuchsbauer, Kiltz and Loss\cite{AGM}.
+\section{Analysis in the Algebraic Group Model}\label{sec:agm}
+For security analysis we use the Algebraic Group Model (AGM) of Fuchsbauer, Kiltz and Loss\cite{agm}.
 % The analysis here differs from more straightforward well-known analysis in the AGM, for example of the \cite{kzg} polynomial commitment scheme as done in \cite{plonk}, in that we look at expressions
 In our terminology, this means the following:
 \begin{itemize}
  \item Before a protocol between \prv and \ver starts, there is a setup phase called \gen where a vector $G\in \G^m$ is produced.
 \item When analyzing knowledge soundness we assume our adversary \adv is \emph{algebraic}. This means that whenever \adv outputs an element $\elem \in \G$ it also outputs an \emph{explanation of \elem} which is a vector $a\in \F^m$ such that $aG=\elem$. We call such a pair $(\elem,a)$ with $\elem=aG$ an \emph{explained element}. 
 \item Importantly, we can add and scalar-multiply explained elements.
-Namely, if $\expln_1=(\elem_1,a_1),\expln_2= (\elem_2,a_2)$ are explained elements and $c_1,c_2\in F$. We can define the explained element $\expln=c_1\expln_1 + c_2\expln_2$ by
+Namely, if $\expln_1=(\elem_1,a_1),\expln_2= (\elem_2,a_2)$ are explained elements and $c_1,c_2\in \F$. We can define the explained element $\expln=c_1\expln_1 + c_2\expln_2$ by
 \[\expln\defeq (c_1\elem_1+c_2\elem_2, c_1 a_1+c_2a_2).\]
 
 \item Crucially for us, an explained element $(0,a)$ for $a\neq 0$ implies a DLA relation for $G$.
 \end{itemize}
+% \begin{remark}
+%  The need for looking at explanations of \emph{expressions} in the \G-elements sent by \adv distinguishes the analysis here from more straightforward AGM analysis in previous papers. For example, in the analysis of that of the KZG scheme\cite{kzg} (e.g. as written in Section 3 of \cite{plonk}).
+% \end{remark}
+
 \newcommand{\vecs}{\ensuremath{\F^n}\xspace}
-\section{Inner product opening scheme }
-We give a definit
-\begin{dfn}\label{dfn:PCscheme}
-A linear commitment scheme consists of 
+\section{Linear commitment schemes}\label{sec:LCS}
+We give a definition of a linear commitment scheme with knowledge soundness in the AGM.
+We use the term \emph{linear} rather than inner product, because we are thinking of the first vector $a$ as a committed prover vector,
+and the second $b$ as chosen by the verifier \ver. Thus, the inner product $ab$ is a linear function of $a$; and $b$ can open an arbitrary linear function of $a$. 
+\begin{dfn}\label{dfn:linearscheme}
+A \emph{linear commitment scheme} is a tuple $(\gen,\com,\open)$ such that 
 \begin{itemize}
- \item $\gen(n)$ -  a randomized algorithm that outputs a common reference string \srs.
- \item $\com(f,\srs)$ - that given a vector $a\in \vecs$ returns a commitment \cm to $f$.
+ \item $\gen(n)$ -  is a randomized algorithm that outputs a common reference string \srs.
+ \item $\com(f,\srs)$ - is an algorithm that given a vector $a\in \vecs$ returns a commitment \cm to $a$.
  \item A public coin protocol  \open between parties \prv and \ver. \prv and \ver are both given $\cm\in \G,b\in \vecs,v\in \F$. \prv is given $a\in \vecs$. 
  \end{itemize}
 such that
 \begin{itemize}
- \item \textbf{Completeness:} Fix $\cm\in \G, b\in \fn, z\in \F$ and $a$.
+ \item \textbf{Completeness:} Fix any $\cm\in \G, b\in \fn, z\in \F$ and $a\in\fn$.
  Suppose that  $\cm = \com(a,\srs)$ and $a\cdot b=z$.  Then if \open is run correctly with inputs $(\cm,b,z;a)$
 \ver outputs \acc with probability one.
  \item \textbf{Knowledge soundness in the algebraic group model:} There exists an efficient \ext such that for any algebraic adversary \adv the probability of \adv winning the following game is \negl over the randomness of \adv and \gen.
@@ -425,9 +454,9 @@ such that
 \newcommand{\expr}{\sum_{i=1}^m \gamma_i C_i}
 \newcommand{\todo}[1]{TODO:#1}
 \section{The IPA protocol}
-\paragraph{Notation}
-Let $k=\log n$.
-$G\in \fn$ is a set of $n$ generators. $G'\defeq (G,P)\in \fnn$.
+\paragraph{Notation:}
+$k=\log n$ for a power of two $n$. For integer $m$ and a vector $a_i\in \F^{2m}$ we denote by $\alo,\ahi\in \F^m$ the first and second half of $a$.  \\ \\
+% $G\in \fn$ is a set of $n$ generators. $G'\defeq (G,P)\in \fnn$.
 
 \noindent
 \underline{$\gen(n)$:}
@@ -462,19 +491,48 @@ Compute and output $\cm\defeq aG$. \\ \\
 \[C_k= a_k G_k + a_k b_k \alpha P\]
 \end{enumerate}
 \begin{remark}
- A more natural scheme would not include $P$ in \srs; and instead have \ver generate random $P\in \G$ during \open.
+ A more natural scheme would not include $P$ in \srs; and instead have \ver generate random $P'\in \G$ during \open taking the place of $\alpha P$.
  This would also make the knowledge soundness analysis in the next section simpler, as it removes the edge case where \adv uses $P$ in
- the explanation \cm (whereas the honest \prv uses only $G$).
+ the explanation of \cm (whereas the honest \prv uses only $G$).
  However, in practice it is more efficient to have $P$ generated in advance, as hashing into a curve can be expensive, especially when \ver is expressed in-circuit as part of recursion.
 \end{remark}
 
+% An essential easy claim for our KS analysis is that
+% \begin{claim}\label{clm:ipwithU}
+% Let $U\in \fn$ be the tensor vector 
+% \[U\defeq (1,u_1)\otimes \ldots\otimes (1,u_k)\]
+% When \open is followed correctly
+%  For each $i=0,\ldots,k-1$
+% \begin{itemize}
+%  \item $G_{k} =  UG$
+%  \item $b_k = Ub$
+% \end{itemize}
+%  
+% \end{claim}
+% \begin{proof}
+% For each $i\in [k]$, let $U_i=(1,u_1)\oplus\ldots\oplus(1,u_i)
+%  We prove by induction on $k$ that
+%  
+% \end{proof}
+The main claim is that 
+\begin{thm}\label{thm:main}
+Assuming DLA holds for \G the above is a linear commitment scheme with knowledge soundness in the algebraic group model.
+ 
+\end{thm}
+
+The main thing to prove is knowledge-soundness which we do in the next section.
 \section{Analyzing knowledge soundness in the AGM}
 \paragraph{Notational convention}
-During the KS game \adv outputs explained elements $\expln=(C,(a,v))$ such that $C=aG+vP$.
-\ver computes expressions in the group elements $C$ output by \adv, and given the transcript one can efficiently compute the corresponding explained  elements by operating on the vectors $(a,v)$.
-We make the convention in the following section that the group elements $C$ are implicitly associated with these explanations that are expressions in the explanations output by \adv. Thus we will talk about an explained element $C\in G$
+During the KS game \adv outputs explained elements $\expln=(C,(a\in \fn,v\in \F))$ such that $C=aG+vP$.
+\ver computes expressions in the group elements  output by \adv; for example, the elements $C_i$.
+As explained in Section \ref{sec:agm}, we can think of these elements as explained elements, by computing the same expression in
+the explanations.
+% 
+% 
+% and given the transcript one can efficiently compute the corresponding explained  elements by operating on the vectors $(a,v)$.
+% We make the convention in the following section that the group elements $C$ are implicitly associated with these explanations that are expressions in the explanations output by \adv. Thus we will talk about an explained element $C\in G$
 \paragraph{Discrepancy of expressions}
-Let $C)$ be an explained element output by \adv during the KS game, or
+Let $C$ be an explained element output by \adv during the KS game, or
 alternatively an explained element where $C$ is computed by \ver from elements output by \adv.
 We abuse notation and refer to $C$ as the explained element, assuming it includes the vector $(a,v)$ which is the expression in the explaining vectors
 output by \adv.
@@ -483,7 +541,7 @@ output by \adv.
 
 We define the discrepancy 
 \[\disc{C}\defeq ab-v/\alpha.\]
-Elements of discrepancy zero are those where the coefficient $v$ of $ P$ equals the inner product times $\alpha$, i.e. $\alpha ab$.
+Elements of discrepancy zero are those where the coefficient $v$ of $ P$ equals the inner product times $1/\alpha$, i.e. $ab/\alpha$.
 In particular, $\disc{C_0}=0$ when \prv is honest.
 
 % By linearity, we can also define $\disc{C}$ for any \emph{expression} $\sum_{i=1}^m \gamma_i C_i$ computed by \ver during \open.
@@ -518,60 +576,57 @@ That is $\cm = aG+vP$.
 
 Let $E$ be the event that \adv wins the knowledge-soundness game.
 Namely, the event that
--
 % that is \ver accepts while $ab\neq v$, where
 \begin{itemize}
-   \item \ver outputs \acc at the end of the protocol.
+   \item \ver outputs \acc.
    \item $ab\neq z$ or $aG\neq \cm$.
 \end{itemize}
 We need to show $\prob(E)=\negl$.
-The basic idea is:
  Let $Z$ be the final term \ver checks is zero; i.e.
  \[Z\defeq C_k - a_k G_k - a_k b_k \alpha P.\]
-We show that except for a \negl subevent of $E$, when we are in $E$, \disc{Z} is non-zero.
-Which means according to Claim \ref{clm:dlafromdisc} we can output a DLA relation. We proceed with the details.
+We show that except for a \negl subevent of $E$, $\disc{Z}\neq 0$ when we are in $E$.
+This implies according to Claim \ref{clm:dlafromdisc} that we can output a non-zero vector $(a',v')$ such that $a'G+v'P=0$. Hence, under DLA we must have $\pr(E)=\negl$.  We proceed with the details.
 
 We have $C_0 =\cm+z\alpha P$.
-So $C_0$'s explanation is $(a,v+\alpha z)$
+So $C_0$'s explanation is $(a,v+\alpha z)$.
 Let $E_0\subset E$ be the subevent of $E$ where $\disc{C_0}=0$. We claim that $\prob(E_0)=\negl$:
 % We look at two cases
 % \begin{itemize}
 %  \item $ab\neq z$:
- \[\disc{C_0} = ab  - v/\alpha - z\]
+ \[\disc{C_0} = ab  - v/\alpha - z.\]
 If $v\neq 0$ the probability over $\alpha$ that this is zero is at most $1/r=\negl$.
-If $v=0$ it means $aG=\cm$ so we're in the event that $ab\neq z$ so $\disc{C_0}\neq 0$.
+If $v=0$ it means $aG=\cm$ so we're in the event that $ab\neq z$, and so $\disc{C_0}\neq 0$.
+(Recall that in $E$ either $aG=\cm$ or $ab\neq z$.)
 
 
 % \end{itemize}
 Now assume we are in $E\setminus E_0$ so that $\disc{C_0}\neq 0$.
-For $i\in [k]$ let $E_i$ be the event that $\disc{C_i}= 0$ while $\disc{C_j}\neq 0$ for $j<i$.
+For $i\in [k]$, let $E_i$ be the subevent that $\disc{C_i}= 0$ while $\disc{C_j}\neq 0$ for $j<i$.
 From linearity, we have
 \[\disc{C_i}= (1/u)\disc{L_i}+ \disc{C_{i-1}} + u\disc{R_i}.\]
 Thus, when \disc{C_{i-1}} is non-zero the probability that $\disc{C_i}=0$ is at most $2/r$.
 So for all $i\in [k]$, $\prob(E_i)=\negl$.
-When we are outside the event $E_1\cup\ldots\cup E_k$  (but in $E\setminus E_0$) then 
+When we are outside the event $E_0\cup E_1\cup\ldots\cup E_k$  (but in $E$) then 
 \[\disc{C_k}\neq 0.\]
 
 Let $U\in \fn$ be the tensor vector 
-\[U\defeq (1,u_1)\otimes \ldots\otimes (1,u_k)\]
+\[U\defeq (1,u_1)\otimes \ldots\otimes (1,u_k).\]
 The important observation is that both $b_k$ and $G_k$ are inner products with $U$:
 \[b_k=Ub,G_k=UG.\]
 Thus
 \[\disc{a_kG_k - a_k b_k\alpha P} = a_k\cdot \disc{UG-(Ub)\alpha P}=0.\]
-Let $Z$ be the final term \ver checks is zero; i.e.
-\[Z\defeq C_k - a_k G_k - a_k b_k \alpha P.\]
-So we have 
+% Recall that $Z$ is the final term \ver checks is zero.
+% \[Z = C_k - a_k G_k - a_k b_k \alpha P.\]
+So for $Z=C_k - a_k G_k - a_k b_k \alpha P$ we have 
 
-So
-\[\disc{Z}=\disc{C_k}- \disc{a_k G_k - a_k b_k \alpha P} = \disc{C_k}\neq 0\]
-
-And so in the event $E\setminus (E_1\cup\ldots\cup  E_k)$ we can output a DL solution for $G'$ according to Claim \ref{clm:dlafromdisc}.
-Hence, according to DLA as in Definition \ref{dfn:DLA} the probability of $E\setminus (E_1\cup\ldots\cup E_k)$ is \negl.
-And so $\prob(E)=\negl$.
+\[\disc{Z}=\disc{C_k}- \disc{a_k G_k - a_k b_k \alpha P} = \disc{C_k}\neq 0.\]
+On the other hand $Z=0$ in $E$.
+And so the event $E\setminus (E_0\cup\ldots\cup  E_k)$ must have \negl probability; and thus also $E$.
+% Hence, according to DLA as in Definition \ref{dfn:DLA} the probability of $E\setminus (E_1\cup\ldots\cup E_k)$ is \negl.
 % \end{proof}
 
 % An \emph{expression} is either an element output by \adv during the knowledge soundness game
- \section*{Acknowledgements}   We thank The Zcash Community Grants program (ZCG) for supporting this work.
+ \section*{Acknowledgements}   We thank the Zcash Community Grants program (ZCG) for supporting this work. We thank Sean Bowe for discussions.
  \bibliographystyle{alpha}
 \bibliography{references}
     
