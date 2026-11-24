@@ -408,12 +408,12 @@ Namely, if $\expln_1=(\elem_1,a_1),\expln_2= (\elem_2,a_2)$ are explained elemen
 \section{Linear commitment schemes}\label{sec:LCS}
 We give a definition of a linear commitment scheme with knowledge soundness in the AGM.
 We use the term \emph{linear} rather than inner product, because we are thinking of the first vector $a$ as a committed prover vector,
-and the second $b$ as chosen by the verifier \ver. Thus, the inner product $ab$ is a linear function of $a$; and $b$ can open an arbitrary linear function of $a$. 
+and the second $b$ as chosen by the verifier \ver. Thus, the inner product $ab$ is a linear function of $a$; and \ver can open an arbitrary linear function of $a$. 
 \begin{dfn}\label{dfn:linearscheme}
 A \emph{linear commitment scheme} is a tuple $(\gen,\com,\open)$ such that 
 \begin{itemize}
  \item $\gen(n)$ -  is a randomized algorithm that outputs a common reference string \srs.
- \item $\com(f,\srs)$ - is an algorithm that given a vector $a\in \vecs$ returns a commitment \cm to $a$.
+ \item $\com(a,\srs)$ - is an algorithm that given a vector $a\in \vecs$ returns a commitment \cm to $a$.
  \item A public coin protocol  \open between parties \prv and \ver. \prv and \ver are both given $\cm\in \G,b\in \vecs,v\in \F$. \prv is given $a\in \vecs$. 
  \end{itemize}
 such that
